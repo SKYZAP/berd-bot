@@ -1,0 +1,71 @@
+export const PlayerGQLFields = `
+_id
+username
+score
+battlesWon
+cards{
+  _id
+  type
+  rarity
+  perks{
+    _id
+    type
+    statChange{
+      statName
+      value
+    }
+    createdAt
+    updatedAt
+  }
+  name
+  level
+  currentExp
+  totalExp
+  strength
+  dexterity
+  constitution
+  intelligence
+  wisdom
+  charisma
+  createdAt
+  updatedAt
+}
+updatedAt
+createdAt`;
+
+export const CardGQLFields = `
+_id
+type
+rarity
+perks{
+  _id
+  type
+  statChange{
+    statName
+    value
+  }
+  createdAt
+  updatedAt
+}
+name
+level
+currentExp
+totalExp
+strength
+dexterity
+constitution
+intelligence
+wisdom
+charisma
+createdAt
+updatedAt`;
+
+export const PerkGQLFields = `
+_id
+type
+statChange{
+  statName
+  value
+}
+createdAt
+updatedAt`;

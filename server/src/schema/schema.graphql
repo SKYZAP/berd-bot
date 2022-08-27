@@ -1,0 +1,248 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type StatChangeDto {
+  statName: String!
+  value: Float!
+}
+
+type AdminDto {
+  _id: String!
+  discordId: String!
+  password: String!
+  email: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type JWTPayload {
+  access_token: String!
+}
+
+type UserDto {
+  _id: String!
+  username: String!
+  discordId: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PerkDto {
+  _id: String!
+  type: PerkType!
+  statChange: [StatChangeDto!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum PerkType {
+  Positive
+  Negative
+}
+
+type CardDto {
+  _id: String!
+  type: CardType!
+  rarity: RarityType!
+  perks: [PerkDto!]
+  name: String!
+  level: Float!
+  currentExp: Float!
+  totalExp: Float!
+  strength: Float!
+  dexterity: Float!
+  constitution: Float!
+  intelligence: Float!
+  wisdom: Float!
+  charisma: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum CardType {
+  Friendly
+  Enemy
+}
+
+enum RarityType {
+  Common
+  Uncommon
+  Epic
+  Artisan
+  Legendary
+}
+
+type PlayerDto {
+  _id: String!
+  username: String!
+  score: Float!
+  battlesWon: Float!
+  cards: [CardDto!]
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type TagDto {
+  _id: String!
+  name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ProjectDto {
+  _id: String!
+  name: String!
+  description: String!
+  tags: [TagDto!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input StatChangeInputDto {
+  statName: String!
+  value: Float!
+}
+
+type Query {
+  loginAdmin(input: LoginAdminDto!): JWTPayload!
+  findOneAdmin(id: String!): AdminDto!
+  findAllAdmin: [AdminDto!]!
+  findOneCard(id: String!): CardDto!
+  findAllCard: [CardDto!]!
+  findOnePlayer(id: String!): PlayerDto!
+  findAllPlayer: [PlayerDto!]!
+  findOnePerk(id: String!): PerkDto!
+  findAllPerk: [PerkDto!]!
+  findOneUser(id: String!): UserDto!
+  findAllUser: [UserDto!]!
+  findOneProject(id: String!): ProjectDto!
+  findAllProject: [ProjectDto!]!
+  findOneTag(id: String!): TagDto!
+  findAllTag: [TagDto!]!
+}
+
+input LoginAdminDto {
+  password: String!
+  email: String!
+}
+
+type Mutation {
+  deleteAdmin(id: String!): AdminDto!
+  createAdmin(input: CreateAdminDto!): AdminDto!
+  deleteCard(id: String!): CardDto!
+  updateCard(id: String!, input: UpdateCardDto!): CardDto!
+  createCard(input: CreateCardDto!): CardDto!
+  deletePlayer(id: String!): PlayerDto!
+  updatePlayer(id: String!, input: UpdatePlayerDto!): PlayerDto!
+  createPlayer(input: CreatePlayerDto!): PlayerDto!
+  addPlayerCard(input: AddPlayerCardDto!): PlayerDto!
+  deletePerk(id: String!): PerkDto!
+  updatePerk(id: String!, input: UpdatePerkDto!): PerkDto!
+  createPerk(input: CreatePerkDto!): PerkDto!
+  deleteUser(id: String!): UserDto!
+  updateUser(id: String!, input: UpdateUserDto!): UserDto!
+  createUser(input: CreateUserDto!): UserDto!
+  deleteProject(id: String!): ProjectDto!
+  updateProject(id: String!, input: UpdateProjectDto!): ProjectDto!
+  createProject(input: CreateProjectDto!): ProjectDto!
+  deleteTag(id: String!): TagDto!
+  updateTag(id: String!, input: UpdateTagDto!): TagDto!
+  createTag(input: CreateTagDto!): TagDto!
+}
+
+input CreateAdminDto {
+  password: String!
+  discordId: String!
+  email: String!
+}
+
+input UpdateCardDto {
+  type: CardType
+  name: String
+  level: Float
+  currentExp: Float
+  totalExp: Float
+  strength: Float
+  dexterity: Float
+  constitution: Float
+  intelligence: Float
+  wisdom: Float
+  charisma: Float
+}
+
+input CreateCardDto {
+  type: CardType!
+  name: String!
+  level: Float!
+  currentExp: Float!
+  totalExp: Float!
+  strength: Float!
+  dexterity: Float!
+  constitution: Float!
+  intelligence: Float!
+  wisdom: Float!
+  charisma: Float!
+}
+
+input UpdatePlayerDto {
+  username: String
+  score: Float
+  battlesWon: Float
+}
+
+input CreatePlayerDto {
+  username: String!
+  score: Float!
+  battlesWon: Float!
+}
+
+input AddPlayerCardDto {
+  playerId: String!
+  cardId: Float!
+}
+
+input UpdatePerkDto {
+  type: PerkType
+  statChange: [StatChangeInputDto!]
+}
+
+input CreatePerkDto {
+  type: PerkType!
+  statChange: [StatChangeInputDto!]!
+}
+
+input UpdateUserDto {
+  username: String
+  discordId: String
+}
+
+input CreateUserDto {
+  username: String!
+  discordId: String!
+}
+
+input UpdateProjectDto {
+  name: String
+  description: String
+  tags: [String!]
+}
+
+input CreateProjectDto {
+  name: String!
+  description: String!
+  tags: [String!]!
+}
+
+input UpdateTagDto {
+  name: String
+}
+
+input CreateTagDto {
+  name: String!
+}

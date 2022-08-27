@@ -1,0 +1,53 @@
+version: '3.8'
+services:
+  # game-client:
+  #   container_name: game-client
+  #   image: berd-bot/game-client
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: game-client
+  #   depends_on:
+  #     - berd-server
+  #   expose:
+  #     - '3005'
+  #   ports:
+  #     - '3005:3005'
+  # client:
+  #   container_name: client
+  #   image: berd-bot/client
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: client
+  #   depends_on:
+  #     - berd-server
+  #   expose:
+  #     - '3015'
+  #   ports:
+  #     - '3015:3015'
+  berd-server:
+    platform: linux/amd64
+    container_name: server
+    image: berd-bot/server
+    build:
+      dockerfile: Dockerfile
+      context: server
+    depends_on:
+      - mongo
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - "mongoData:/data/db"
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "Berd"
+      MONGO_INITDB_ROOT_PASSWORD: "B3rdBot"
+    command: mongod
+volumes:
+  mongoData: 
