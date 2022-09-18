@@ -19,11 +19,13 @@ import { ProjectModule } from './modules/project/project.module';
 import { TagModule } from './modules/tag/tag.module';
 import { ProjectResolver } from './modules/project/project.resolver';
 import { TagResolver } from './modules/tag/tag.resolver';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import configs from './config/index';
+import { DiscordModule } from '@discord-nestjs/core';
+import { GatewayIntentBits } from 'discord.js';
+import { BerdbotModule } from './modules/berdbot/berdbot.module';
 
 const mongoHost = process.env.USING_DOCKER == 'true' ? 'mongo' : 'localhost';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -46,6 +48,32 @@ const mongoHost = process.env.USING_DOCKER == 'true' ? 'mongo' : 'localhost';
       isGlobal: true,
       load: [configs],
     }),
+    DiscordModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        token: configService.get('DISCORD_TOKEN'),
+        discordClientOptions: {
+          intents: [
+            GatewayIntentBits.Guilds,
+            GatewayIntentBits.GuildMessages,
+            GatewayIntentBits.GuildMessageReactions,
+            GatewayIntentBits.GuildVoiceStates,
+            GatewayIntentBits.DirectMessages,
+            GatewayIntentBits.DirectMessageTyping,
+          ],
+        },
+        registerCommandOptions: [
+          {
+            // forGuild: configService.get('DISCORD_GUILDID'), // Disable to register commands globally
+            removeCommandsBefore: true,
+          },
+        ],
+        autoLogin: true,
+        failOnLogin: true,
+      }),
+      inject: [ConfigService],
+    }),
+    BerdbotModule,
     AdminModule,
     AuthModule,
     UserModule,

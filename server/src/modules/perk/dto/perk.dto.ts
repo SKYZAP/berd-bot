@@ -1,6 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { PerkType } from '../../../constants';
-import { StatChangeDto } from '../../../utils';
+import { PerkType, StatChangeDto } from '../../../constants';
 
 @ObjectType()
 export class PerkDto {

@@ -14,5 +14,10 @@
     "incremental": true,
     "skipLibCheck": true,
     "typeRoots": ["@types", "node_modules/@types"],
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
   }
 }

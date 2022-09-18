@@ -1,6 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import { BaseEntity, PerkType } from '../../constants';
-import { StatChangeDto } from '../../utils';
+import { BaseEntity, PerkType, StatChangeDto } from '../../constants';
 
 @Entity('perks')
 export class PerkEntity extends BaseEntity {

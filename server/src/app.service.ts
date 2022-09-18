@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { MediaDto } from './utils';
+import { MediaDto } from './constants';
 
 const cloudinary = require('cloudinary').v2;
 const DatauriParser = require('datauri/parser');
@@ -11,7 +11,7 @@ export class AppService {
   public async UploadToCloudinary(file, target?): Promise<MediaDto> {
     try {
       if (!target) {
-        target = 'trace';
+        target = 'bot';
       }
 
       if (!file)
@@ -51,7 +51,7 @@ export class AppService {
   async DeleteFromCloudinary(publicId, target?): Promise<Boolean> {
     try {
       if (!target) {
-        target = 'trace';
+        target = 'bot';
       }
 
       if (!publicId)

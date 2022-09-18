@@ -1,4 +1,10 @@
-import { Field, registerEnumType } from '@nestjs/graphql';
+import {
+  Field,
+  InputType,
+  ObjectType,
+  registerEnumType,
+} from '@nestjs/graphql';
+import { IsString } from 'class-validator';
 import { CreateDateColumn, ObjectIdColumn, UpdateDateColumn } from 'typeorm';
 
 export class BaseEntity {
@@ -13,6 +19,53 @@ export class BaseEntity {
   @UpdateDateColumn()
   @Field(() => Date)
   updatedAt: Date;
+}
+
+export class UploadDto {
+  @IsString()
+  title: string;
+
+  @IsString()
+  name: string;
+}
+
+@ObjectType()
+export class MediaDto {
+  @Field()
+  @IsString()
+  url: string;
+
+  @Field()
+  @IsString()
+  public_id: string;
+}
+
+@InputType()
+export class MediaInputDto {
+  @Field()
+  url: string;
+
+  @Field()
+  public_id: string;
+}
+
+@InputType()
+export class PaginationOptions {
+  @Field({ nullable: true })
+  page?: number = 1;
+
+  @Field({ nullable: true })
+  records?: number = 5;
+}
+
+@InputType('StatChangeInputDto')
+@ObjectType()
+export class StatChangeDto {
+  @Field()
+  statName: string;
+
+  @Field()
+  value: number;
 }
 
 export enum RarityType {
