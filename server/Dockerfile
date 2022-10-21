@@ -1,5 +1,9 @@
 FROM node:12-alpine AS build
 
+RUN apk add --no-cache --virtual .gyp \
+  python3 \
+  make \
+  g++ 
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
@@ -13,6 +17,7 @@ FROM node:18-slim
 WORKDIR /app
 # Change to production for deployment
 ENV NODE_ENV=testing
+ENV USING_DOCKER=true
 
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules

@@ -9,6 +9,7 @@ import {
 import { GuildMember } from 'discord.js';
 import { ChannelCheck, PlayerCheck } from '../../../../utils';
 import { PlayDto } from '../../dto/music/play.dto';
+const { QueryType } = require('discord-player');
 
 @Command({
   name: 'play',
@@ -34,6 +35,11 @@ export class PlayCommand implements DiscordTransformedCommand<PlayDto> {
       // Gets song keywords/url
       const query = dto.query;
       const queue = musicPlayer.createQueue(interaction.guild, {
+        ytdlOptions: {
+          filter: 'audioonly',
+          highWaterMark: 1 << 30,
+          dlChunkSize: 0,
+        },
         metadata: {
           channel: interaction.channel,
         },
@@ -53,9 +59,11 @@ export class PlayCommand implements DiscordTransformedCommand<PlayDto> {
       await interaction.deferReply();
       const track = await musicPlayer
         .search(query, {
+          searchEngine: QueryType.AUTO,
           requestedBy: interaction.user,
         })
         .then((x) => x.tracks[0]);
+
       if (!track)
         await interaction.followUp({
           content: `❌ | Track **${query}** not found!`,
@@ -66,7 +74,8 @@ export class PlayCommand implements DiscordTransformedCommand<PlayDto> {
         content: `⏱️ | Loading track **${track.title}**!`,
       });
     } catch (error) {
-      console.log(error.message);
+      console.log('ERROR: ', error);
+      // console.log(error.message);
     }
   }
 }

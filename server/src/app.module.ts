@@ -65,7 +65,7 @@ const mongoHost = process.env.USING_DOCKER == 'true' ? 'mongo' : 'localhost';
         registerCommandOptions: [
           {
             // forGuild: configService.get('DISCORD_GUILDID'), // Disable to register commands globally
-            removeCommandsBefore: true,
+            // removeCommandsBefore: true,
           },
         ],
         autoLogin: true,
